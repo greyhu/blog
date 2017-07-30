@@ -1,7 +1,7 @@
 #!/bin/sh
 #chown -R :www-data ./
 echo 正在下载依赖程序
-apt install nginx php7.0 mysql-server composer php7.0-mbstring
+apt install zip unzip nginx php7.0 mysql-server composer php7.0-mbstring php7.0-dom
 echo 正在设置文件系统权限
 chmod -R 775 ./storage
 chmod -R 775 ./bootstrap/cache

@@ -178,7 +178,6 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Zizaco\Entrust\EntrustServiceProvider::class,
-        GeneaLabs\LaravelCaffeine\Providers\LaravelCaffeineService::class,
         Barryvdh\Cors\ServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
