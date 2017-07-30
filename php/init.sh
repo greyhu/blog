@@ -1,7 +1,7 @@
 #!/bin/sh
 #chown -R :www-data ./
 echo 正在下载依赖程序
-apt install zip unzip nginx php7.0 mysql-server composer php7.0-mbstring php7.0-dom php7.0-mysql
+apt install zip unzip nginx php7.0 mysql-server composer php7.0-mbstring php7.0-xml php7.0-mysql
 echo 正在设置文件系统权限
 chmod -R 775 ./storage
 chmod -R 775 ./bootstrap/cache
@@ -25,9 +25,9 @@ echo 备份.env为.env.bk
 cp .env .env.bk
 
 echo 设置数据库参数
-sed -i "s/DB_DATABASE=(.*)/DB_DATABASE=$dbname/" .env
-sed -i "s/DB_USERNAME=(.*)/DB_USERNAME=$dbuser/" .env
-sed -i "s/DB_PASSWORD=(.*)/DB_PASSWORD=$dbpwd/" .env
+sed -i "s/DB_DATABASE=.*/DB_DATABASE=${dbname}/" .env
+sed -i "s/DB_USERNAME=.*/DB_USERNAME=${dbuser}/" .env
+sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=${dbpwd}/" .env
 
 echo 正在创建数据库
 MYSQL_CMD="mysql -u${dbuser} -p${dbpwd}"
