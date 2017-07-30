@@ -70,7 +70,6 @@ fi
 cd ..
 
 echo "======正在生成前端====>"
-apt install npm
 curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
 sudo apt install -y nodejs
 
