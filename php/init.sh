@@ -31,7 +31,7 @@ echo 正在创建数据库
 MYSQL_CMD="mysql -u${dbuser} -p${dbpwd}"
 create_db_sql="create database IF NOT EXISTS ${dbname}"
 echo ${create_db_sql}  | ${MYSQL_CMD}
-if [ $? -ne 0 ] then
+if [ $? -ne 0 ]; then
 	echo 创建数据库失败，请确认mysql用户密码，或者尝试修改本脚本，为mysql设置正确的host和端口
 	exit
 fi
