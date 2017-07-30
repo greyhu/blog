@@ -38,6 +38,7 @@ export function BLOG_INIT ({ commit, state }, params) {
     commit('SET_ARTICLE_IDS', json.articleids)
     commit('SET_CATALOGS', json.catalogs)
     commit('SET_TAGS', json.tags)
+    commit('SET_API_CLIENT', json.settings.apiclient)
     return json
   })
 }

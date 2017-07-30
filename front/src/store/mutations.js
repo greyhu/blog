@@ -34,3 +34,8 @@ export function SHOW_LAYER (state, layer) {
 export function HIDE_LAYER (state, layer) {
   state.layer[layer] = false
 }
+
+export function SET_API_CLIENT (state, apiclient) {
+  state.apiClient.id = apiclient.id
+  state.apiClient.secret = apiclient.secret
+}

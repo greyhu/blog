@@ -61,6 +61,6 @@ fi
 
 echo 正在重启
 service php7.0-fpm restart
-service nginx -s reload
+nginx -s reload
 
 echo 初始化全部完成。Enjoy！
