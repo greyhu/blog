@@ -78,12 +78,12 @@ class BlogController extends Controller
 
         if(file_exists(public_path('index.html'))) {
             @file_put_contents(public_path('index.html'),
-                preg_replace('/<meta name="keywords".*?>/', '<meta name="keywords" content="'.$request['title'].'">',
-                preg_replace('/<meta name="description".*?>/', '<meta name="description" content="'.$request['desc'].'">',
-                    preg_replace('/<title>.*?<\/title>/', '<title>'.$request['title'].'</title>',
-                        file_get_contents(public_path('index.html'))
-                    )
-                ))
+                preg_replace('/<meta name="keywords".*?>/', '<meta name="keywords" content="'.$config->title.'">',
+                    preg_replace('/<meta name="description".*?>/', '<meta name="description" content="'.$config->desc.'">',
+                        preg_replace('/<title>.*?<\/title>/', '<title>'.$config->title.'</title>',
+                            file_get_contents(public_path('index.html'))
+                        )
+                    ))
             );
         }
         return ['stat'=>0];

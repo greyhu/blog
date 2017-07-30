@@ -41,6 +41,16 @@ Artisan::command('initblog_setapipassword', function (){
     if($exists = Storage::exists('settings.json')) {   //::disk('local')
         $config = json_decode(Storage::get('settings.json'));
         $config->apiclient = ['id'=>$row->id, 'secret'=>$row->secret];
+        if(file_exists(public_path('index.html'))) {
+            @file_put_contents(public_path('index.html'),
+                preg_replace('/<meta name="keywords".*?>/', '<meta name="keywords" content="'.$config->title.'">',
+                    preg_replace('/<meta name="description".*?>/', '<meta name="description" content="'.$config->desc.'">',
+                        preg_replace('/<title>.*?<\/title>/', '<title>'.$config->title.'</title>',
+                            file_get_contents(public_path('index.html'))
+                        )
+                    ))
+            );
+        }
     } else {
         $config = ['apiclient'=>['id'=>$row->id, 'secret'=>$row->secret], 'title'=>'未设置名称', 'desc'=>'未设置描述'];
     }

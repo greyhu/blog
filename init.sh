@@ -3,6 +3,17 @@
 echo 正在下载依赖程序
 apt install zip unzip curl nginx php7.0 php7.0-fpm mysql-server composer php7.0-mbstring php7.0-xml php7.0-mysql
 
+echo "======正在生成前端====>"
+curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+sudo apt install -y nodejs
+
+cd front
+npm install
+npm run build
+cp dist/index.html ../php/public/index.html
+cp -R dist/static ../php/public/
+cd ..
+
 echo "======正在处理后端====>"
 cd php
 
@@ -10,6 +21,7 @@ echo 正在设置文件系统权限
 chown -R www-data:www-data storage/
 chmod -R 777 ./storage
 chmod -R 777 ./bootstrap/cache
+chmod 777 ./public/index.html
 
 echo 正在更新必要的模块
 composer update
@@ -73,17 +85,6 @@ if [ "${donew}" = "y" ]; then
 fi
 
 cd ..
-
-echo "======正在生成前端====>"
-curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
-sudo apt install -y nodejs
-
-cd front
-npm install
-npm run build
-cp dist/index.html ../php/public/index.html
-cp -R dist/static ../php/public/
-chmod 777 ../php/public/index.html
 
 echo 正在重启
 service php7.0-fpm restart
