@@ -24,7 +24,10 @@ fi
 echo "======正在处理后端====>"
 cd php
 
-echo 正在设置文件系统权限
+echo 正在初始化Laravel
+php artisan key:generate
+php artisan storage:link
+
 chown -R www-data:www-data storage/
 chmod -R 777 ./storage
 chmod -R 777 ./bootstrap/cache
@@ -35,10 +38,6 @@ read choose
 if [ "${choose}" = "y" ]; then
 composer update
 fi
-
-echo 正在初始化Laravel
-php artisan key:generate
-php artisan storage:link
 
 echo 创建数据库,y/n?
 read createdb
