@@ -18,30 +18,35 @@ echo 正在初始化Laravel
 php artisan key:generate
 php artisan storage:link
 
-echo 开始初始化数据库
-echo 请输入数据库名称：
-read dbname
-echo 请输入数据库用户名：
-read dbuser
-echo 请输入数据库密码：
-read dbpwd
 
-echo 备份.env为.env.bk
-cp .env .env.bk
 
-echo 设置数据库参数
-sed -i "s/DB_DATABASE=.*/DB_DATABASE=${dbname}/" .env
-sed -i "s/DB_USERNAME=.*/DB_USERNAME=${dbuser}/" .env
-sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=${dbpwd}/" .env
+echo 创建数据库,y/n?
+read createdb
+if [ "${createdb}" = "y" ]; then
+	echo 请输入数据库名称：
+	read dbname
+	echo 请输入数据库用户名：
+	read dbuser
+	echo 请输入数据库密码：
+	read dbpwd
 
-echo 正在创建数据库
-MYSQL_CMD="mysql -u${dbuser} -p${dbpwd}"
-create_db_sql="create database IF NOT EXISTS ${dbname} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
-echo ${create_db_sql}  | ${MYSQL_CMD}
-if [ $? -ne 0 ]; then
-	echo 创建数据库失败，请确认mysql用户密码，或者尝试修改本脚本，为mysql设置正确的host和端口
-	exit
+	echo 备份.env为.env.bk
+	cp .env .env.bk
+
+	echo 设置数据库参数
+	sed -i "s/DB_DATABASE=.*/DB_DATABASE=${dbname}/" .env
+	sed -i "s/DB_USERNAME=.*/DB_USERNAME=${dbuser}/" .env
+	sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=${dbpwd}/" .env
+
+	MYSQL_CMD="mysql -u${dbuser} -p${dbpwd}"
+	create_db_sql="create database IF NOT EXISTS ${dbname} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
+	echo ${create_db_sql}  | ${MYSQL_CMD}
+	if [ $? -ne 0 ]; then
+		echo 创建数据库失败，请确认mysql用户密码，或者尝试修改本脚本，为mysql设置正确的host和端口
+		exit
+	fi
 fi
+
 echo 正在更新数据表
 php artisan migrate
 
