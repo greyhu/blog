@@ -1,7 +1,7 @@
 #!/bin/sh
 #chown -R :www-data ./
 echo 正在下载依赖程序
-apt install zip unzip nginx php7.0 mysql-server composer php7.0-mbstring php7.0-xml php7.0-mysql
+apt install zip unzip nginx php7.0 php7.0-fpm mysql-server composer php7.0-mbstring php7.0-xml php7.0-mysql
 echo 正在设置文件系统权限
 chmod -R 775 ./storage
 chmod -R 775 ./bootstrap/cache
@@ -47,7 +47,7 @@ php artisan initblog_setapipassword
 echo 基础初始化已完成
 echo 设置新的拥有者，y/n?
 read donew
-if [ "$donew" == "y" ]; then
+if [ "${donew}" = "y" ]; then
 	echo 请输入拥有者的Email（作为登陆名）:
 	read email
 	echo 请输入拥有者的昵称:
@@ -58,5 +58,9 @@ if [ "$donew" == "y" ]; then
 	php artisan initblog $email $nick $pwd
 	echo 设置拥有者完成
 fi
+
+echo 正在重启
+service php7.0-fpm restart
+service nginx -s reload
 
 echo 初始化全部完成。Enjoy！
