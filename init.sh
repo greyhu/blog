@@ -1,18 +1,25 @@
 #!/bin/sh
-#chown -R :www-data ./
-echo 正在下载依赖程序
-apt install zip unzip curl nginx php7.0 php7.0-fpm mysql-server composer php7.0-mbstring php7.0-xml php7.0-mysql
+echo 正在停止服务
+service nginx stop
 
-echo "======正在生成前端====>"
+echo 下载依赖程序,y/n?
+read choose
+if [ "${choose}" = "y" ]; then
+apt install zip unzip curl nginx php7.0 php7.0-fpm mysql-server composer php7.0-mbstring php7.0-xml php7.0-mysql
 curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
 sudo apt install -y nodejs
+fi
 
+echo "======生成前端====>y/n?"
+read choose
+if [ "${choose}" = "y" ]; then
 cd front
 npm install
 npm run build
 cp dist/index.html ../php/public/index.html
 cp -R dist/static ../php/public/
 cd ..
+fi
 
 echo "======正在处理后端====>"
 cd php
@@ -23,14 +30,15 @@ chmod -R 777 ./storage
 chmod -R 777 ./bootstrap/cache
 chmod 777 ./public/index.html
 
-echo 正在更新必要的模块
+echo 更新composer,y/n?
+read choose
+if [ "${choose}" = "y" ]; then
 composer update
+fi
 
 echo 正在初始化Laravel
 php artisan key:generate
 php artisan storage:link
-
-
 
 echo 创建数据库,y/n?
 read createdb
@@ -88,5 +96,6 @@ cd ..
 
 echo 正在重启
 service php7.0-fpm restart
-nginx -s reload
+service nginx start
+#nginx -s reload
 echo 初始化全部完成。Enjoy！
