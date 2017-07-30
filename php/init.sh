@@ -47,7 +47,7 @@ php artisan initblog_setapipassword
 echo 基础初始化已完成
 echo 设置新的拥有者，y/n?
 read donew
-if [ "$donew" -eq "y" ]; then
+if [ "$donew" == "y" ]; then
 	echo 请输入拥有者的Email（作为登陆名）:
 	read email
 	echo 请输入拥有者的昵称:
