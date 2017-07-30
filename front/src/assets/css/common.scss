@@ -1,0 +1,63 @@
+@import "define";
+body {
+  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 14px;
+  line-height: 1.5;
+  background-color: #eeeeee;
+}
+* {
+  box-sizing: border-box;
+}
+.font-size-normal {
+  font-size: $size-normal;
+}
+.font-size-small {
+  font-size: $size-small;
+}
+.font-size-big {
+  font-size: $size-big;
+}
+.font-size-big2 {
+  font-size: $size-big2;
+}
+.bg-color-gray {
+  background-color: $color-gray;
+}
+
+.margin-bottom {
+  margin-bottom: 16px;
+}
+
+@media (max-width: $xs-max) {
+  .container-main {
+    width: 100%;
+    padding: 0 8px;
+  }
+}
+
+@media (min-width: $sm-min) {
+  .container-main {
+    width: 540px;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: $md-min) {
+  .container-main {
+    width: 720px;
+  }
+}
+
+@media (min-width: $lg-min) {
+  .container-main {
+    width: 960px;
+  }
+}
+
+@media (min-width: $xl-min) {
+  .container-main {
+    width: 1140px;
+  }
+}
