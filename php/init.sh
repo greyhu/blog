@@ -3,8 +3,9 @@
 echo 正在下载依赖程序
 apt install zip unzip nginx php7.0 php7.0-fpm mysql-server composer php7.0-mbstring php7.0-xml php7.0-mysql
 echo 正在设置文件系统权限
-chmod -R 775 ./storage
-chmod -R 775 ./bootstrap/cache
+chown -R www-data:www-data storage/
+chmod -R 666 ./storage
+chmod -R 666 ./bootstrap/cache
 
 echo 正在更新必要的模块
 composer update
@@ -41,6 +42,9 @@ echo 正在更新数据表
 php artisan migrate
 
 echo 正在新建API客户端
+php artisan passport:keys
+chown -R www-data:www-data storage/
+chmod -R 666 ./storage
 php artisan passport:client --password
 php artisan initblog_setapipassword
 
